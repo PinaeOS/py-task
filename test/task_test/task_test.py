@@ -1,5 +1,6 @@
 # coding=utf-8
 
+import datetime
 import time
 
 from task import task
@@ -41,7 +42,8 @@ def test_simple_trigger():
 from task.trigger import cron_trigger
 def test_cron_trigger():
     _job = my_job.MyJob()
-    _trigger = cron_trigger.CronTrigger('0-59/5 10,15,20 * * MAY * 2015')
+    _trigger = cron_trigger.CronTrigger('0-59/5 20-40 * * MAY * 2015')
+    _trigger.set_date(datetime.datetime(2015, 5, 28, 16, 30));
     _task = task.Task('Task2', _job, _trigger)
     
     container.add_task(_task)
@@ -49,6 +51,6 @@ def test_cron_trigger():
     print '---------Start Cron Trigger---------'
     container.start_all()
     
-test_simple_trigger()
-time.sleep(30)
+# test_simple_trigger()
+# time.sleep(30)
 test_cron_trigger()
