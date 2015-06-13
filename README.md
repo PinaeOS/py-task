@@ -1,6 +1,6 @@
 py_task
 =========
-py_task is a task scheduling tools for Python. It already used on device monitor project.
+py_task is a task scheduling tools for Python.
 
 Installation
 ------------
