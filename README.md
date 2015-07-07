@@ -1,17 +1,20 @@
-py_task
-=========
+#py_task#
+
 py_task is a task scheduling tools for Python.
 
-Installation
-------------
+- Support repeat trigger
+- Support cron trigger
+- Easy to use in Python
+
+## Installation ##
+
 The lastest stable is py_task-1.0.tar.gz
 
     python setup.py install
     
-Getting Start
-------------
+## Getting Start ##
 
-A short demo:
+demo for py_task:
 	
 	from task import task
 	from task import task_container
@@ -26,17 +29,17 @@ A short demo:
     	def execute(self):
         	print 'Hello now is ' + str(time.time())
     
-    new_task = task.Task('Task', MyJob(), cron_trigger.CronTrigger('0-59/5 10,15,20 * * * * 2015'))
+	cron = '0-59/5 10,15,20 * * * * 2015'
+    new_task = task.Task('Task', MyJob(), cron_trigger.CronTrigger(cron))
     container.add_task(new_task)
     container.start_all()
 
-Documentation
-------------
+## Documentation ##
 
 Full documentation is hosted on [HERE](). 
 Sources are available in the `docs/` directory.
 
-License
--------
+## License ##
+
 py_task is licensed under the Apache License, Version 2.0. See LICENSE for full license text
 
