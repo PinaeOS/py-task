@@ -1,12 +1,13 @@
 import os
 import sys
 
+import task
+
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
-import task
 
 with open('README.md', 'r', 'utf-8') as fp:
     long_description = fp.read()
@@ -27,14 +28,14 @@ classifiers = [
 ]
 
 setup(
-      name='py_task',
-      version=task.__version__,
-      author='Yugeng Hui',
-      author_email='interhuiyg@163.com',
-      url='https://github.com/interhui/py_task',
-      packages=packages,
-      description='Task scheduling tools for python',
-      long_description=long_description,
-      license='Apache 2.0',
-      classifiers=classifiers
+      name = 'py_task',
+      version = task.__version__,
+      author = 'Yugeng Hui',
+      author_email = 'interhuiyg@163.com',
+      url = 'https://github.com/interhui/py_task',
+      packages = packages,
+      description = 'Task scheduling tools for python',
+      long_description = long_description,
+      license = 'Apache 2.0',
+      classifiers = classifiers
 )
