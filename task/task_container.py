@@ -45,44 +45,34 @@ class TaskContainer(object):
                 r = task_runner.TaskRunner(self.tasks.get(name))
                 self.task_runners[name] = r
             if r != None:
-                r.start()
+                r.start_task()
         else:
             print 'No such task'
             
     def start_all(self):
         for name in self.tasks:
-            if name != None:
-                if self.task_runners.has_key(name):
-                    r = self.task_runners.get(name)
-                else:
-                    r = task_runner.TaskRunner(self.tasks.get(name))
-                    self.task_runners[name] = r
-                    
-                if r != None:
-                    r.start()
+            self.start(name)
     
             
     def pause(self, name):
         if name != None:
             r = self.task_runners.get(name)
-            r.pause()
+            r.pause_task()
         else:
             print 'No such running task'
     
     def pasuse_all(self):
         for name in self.tasks:
-            if name != None:
-                self.task_runners.get(name).pause()
+            self.pause(name)
                 
     def stop(self, name):
         if name != None:
             r = self.task_runners.get(name)
-            r.stop()
+            r.stop_task()
         else:
             print 'No such running task'
     
     def stop_all(self):
         for name in self.tasks:
-            if name != None:
-                self.task_runners.get(name).stop()
+            self.stop(name)
         

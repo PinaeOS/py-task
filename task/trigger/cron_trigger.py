@@ -16,7 +16,11 @@ class CronTrigger(trigger.Trigger):
     
     def _is_match(self):
         parser = CronParser(self.cron)
-        return parser._is_match()
+        
+        _date = datetime.date.today()
+        _time = datetime.datetime.now()
+        
+        return parser._is_match(_date, _time)
     
 class CronParser():
 
@@ -87,10 +91,7 @@ class CronParser():
             value = value.replace(day_of_weeks[i], str(i + 1));
         return self._parse_integer(value, 1, 7);
     
-    def _is_match(self):
-        
-        _date = datetime.date.today()
-        _time = datetime.datetime.now()
+    def _is_match(self, _date, _time):
         
         # In Python datetime's weekday Monday is 0 and Sunday is 6
         day_of_week = _date.weekday() + 1  
@@ -99,7 +100,7 @@ class CronParser():
                     _time.second in self.second_set and \
                     _time.minute in self.minute_set and \
                     _time.hour in self.hour_set and \
-                    _time.day in self.day_of_month_set and \
+                    _date.day in self.day_of_month_set and \
                     _date.month in self.month_set and \
                     _date.year in self.year_set and \
                     day_of_week in self.day_of_week_set
