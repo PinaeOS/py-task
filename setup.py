@@ -28,7 +28,7 @@ classifiers = [
 ]
 
 setup(
-      name = 'py_task',
+      name = 'py-task',
       version = task.__version__,
       author = 'Yugeng Hui',
       author_email = 'interhuiyg@163.com',
