@@ -1,6 +1,6 @@
-#py_task#
+#py-task#
 
-py_task is a task scheduling tools for Python.
+py-task is a task scheduling tools for Python.
 
 - Support repeat trigger
 - Support cron trigger
@@ -8,13 +8,13 @@ py_task is a task scheduling tools for Python.
 
 ## Installation ##
 
-The lastest stable is py_task-1.0.tar.gz
+The lastest stable is py-task-1.0.tar.gz
 
     python setup.py install
     
 ## Getting Start ##
 
-demo for py_task:
+demo for py-task:
 	
 	from task import task
 	from task import task_container
@@ -41,5 +41,5 @@ Sources are available in the `docs/` directory.
 
 ## License ##
 
-py_task is licensed under the Apache License, Version 2.0. See LICENSE for full license text
+py-task is licensed under the Apache License, Version 2.0. See LICENSE for full license text
 
