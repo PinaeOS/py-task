@@ -22,7 +22,7 @@ def test_cron_trigger():
     trigger_1 = cron_trigger.CronTrigger('0-59/5 10-50 * * * * *')
     trigger_1.set_date(datetime.datetime(2015, 7, 9, 1, 25), datetime.datetime(2015, 7, 10, 1, 40));
     
-    task_1 = task.Task('Task_1', time_job.MyJob(), trigger_1)
+    task_1 = task.Task('Task_1', time_job.TimeJob(), trigger_1)
     container.add_task(task_1)
     
     #start hello_job hour=* minute=15-45 second=every 22 seconds 

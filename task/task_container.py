@@ -5,12 +5,14 @@ task container
 @author: Huiyugeng
 '''
 
+import logging
+
 import task
 import task_runner
 
 class TaskContainer(object):
 
-    def __init__(self, max_task=100):
+    def __init__(self, max_task = 100):
         self.max_task = max_task
         
         self.tasks = {}
@@ -24,8 +26,14 @@ class TaskContainer(object):
         return False
     
     def add_task(self, _task):
-        if self._check_task(_task) and len(self.tasks) < self.max_task:
-            self.tasks[_task.get_name()] = _task
+        logging.info('add task: %s' % _task.get_name())
+        if self._check_task(_task):
+            if  len(self.tasks) < self.max_task:
+                self.tasks[_task.get_name()] = _task
+            else:
+                logging.error('task constainer is FULL, max size is %d' % self.max_task)
+        else:
+            logging.error('task is NOT instance of task.Task')
     
     def remove_task(self, _task):
         if self._check_task(_task):
@@ -38,6 +46,7 @@ class TaskContainer(object):
             del(self.tasks[name])
     
     def start(self, name):
+        logging.info('start task: %s' % name)
         if name != None:
             if self.task_runners.has_key(name):
                 r = self.task_runners.get(name)
@@ -46,8 +55,10 @@ class TaskContainer(object):
                 self.task_runners[name] = r
             if r != None:
                 r.start_task()
+            else:
+                logging.error('Task Runner is None')
         else:
-            print 'No such task'
+            logging.error('No such task: %s' % name)
             
     def start_all(self):
         for name in self.tasks:
@@ -55,22 +66,24 @@ class TaskContainer(object):
     
             
     def pause(self, name):
+        logging.info('pause task: %s' % name)
         if name != None:
             r = self.task_runners.get(name)
             r.pause_task()
         else:
-            print 'No such running task'
+            logging.error('No such running task %s' % name)
     
     def pasuse_all(self):
         for name in self.tasks:
             self.pause(name)
                 
     def stop(self, name):
+        logging.info('stop task: %s' % name)
         if name != None:
             r = self.task_runners.get(name)
             r.stop_task()
         else:
-            print 'No such running task'
+            logging.error('No such running task %s' % name)
     
     def stop_all(self):
         for name in self.tasks:
