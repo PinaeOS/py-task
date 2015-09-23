@@ -39,6 +39,10 @@ class TaskRunner(threading.Thread):
 
     
     def run(self):
+        start_delay = self.trigger._get_start_delay()
+        if start_delay > 0:
+            time.sleep(start_delay)
+            
         while self.stop_flag is False:
             if self.pause_flag is False and self.trigger._is_match():
                 self.trigger._inc_execute_count()  # executer counter
@@ -72,10 +76,7 @@ class TaskRunner(threading.Thread):
             self.pause_flag = False
             self._task.set_status(1)  
         elif self.trigger != None and isinstance(self.trigger, trigger.Trigger):
-            start_delay = self.trigger._get_start_delay()
-            if start_delay > 0:
-                time.sleep(start_delay)
-            
+
             self.interval = self.trigger._get_repeat_interval()
             
             if self.stop_flag is True:
