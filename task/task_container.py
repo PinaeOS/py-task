@@ -4,7 +4,7 @@ task container
 
 @author: Huiyugeng
 '''
-
+import types
 import logging
 
 import task
@@ -17,6 +17,8 @@ class TaskContainer(object):
         
         self.tasks = {}
         self.task_runners = {}
+        
+        self.daemon = task_runner.DaemonTask()
     
     def _check_task(self, _task):
         if _task != None and isinstance(_task, task.Task):
@@ -36,33 +38,53 @@ class TaskContainer(object):
             logging.error('task is NOT instance of task.Task')
     
     def remove_task(self, _task):
-        if self._check_task(_task):
+        if type(_task) == types.StringType:
+            name = str(_task)
+        elif self._check_task(_task):
             name = _task.get_name()
+        
+        if name != None:
             if self.task_runners.has_key(name):
                 r = self.task_runners.get(name)
                 if r != None:
-                    r.stop()
+                    r.stop_task()
                 del(self.task_runners[name])
             del(self.tasks[name])
     
+    def _new_task_runner(self, name):
+        r = None
+        _task = self.tasks.get(name)
+        if _task != None and isinstance(_task, task.Task):
+            r = task_runner.TaskRunner(_task)
+            self.task_runners[name] = r
+        else:
+            logging.error('task %s is NOT instance of task.Task' % name)
+            
+        return r
+    
     def start(self, name):
+        
         logging.info('start task: %s' % name)
         if name != None:
             if self.task_runners.has_key(name):
                 r = self.task_runners.get(name)
             else:
-                r = task_runner.TaskRunner(self.tasks.get(name))
-                self.task_runners[name] = r
+                r = self._new_task_runner(name)
+                
             if r != None:
+                if r.started is True and r.stop_flag is True:
+                    r = self._new_task_runner(name)
                 r.start_task()
             else:
-                logging.error('Task Runner is None')
+                logging.error('Task Runner is NONE')
         else:
-            logging.error('No such task: %s' % name)
+            logging.error('task name is NONE')
             
-    def start_all(self):
+    def start_all(self, daemon = False):
         for name in self.tasks:
             self.start(name)
+        if daemon:
+            self.daemon.start_task()
     
             
     def pause(self, name):
@@ -88,4 +110,5 @@ class TaskContainer(object):
     def stop_all(self):
         for name in self.tasks:
             self.stop(name)
+        self.daemon.stop_task()
         

@@ -34,23 +34,31 @@ def test_simple_trigger():
     test_job.set_task(_task)
     
     print 'start at %s' % get_now()
-    print '---------Start---------'
-    container.start_all()
+    print '----Start (With Daemon)----'
+    container.start_all(True)
     
     time.sleep(10) # pause container
-    print '---------Pause---------'
+    print '---------Pause All---------'
     container.pasuse_all()
     
-    time.sleep(30) # restart container
-    print '---------Restart---------'
+    time.sleep(10) # restart container
+    print '--------Restart All--------'
     container.start_all()
     
-    time.sleep(60) # stop container
-    print '---------Stop---------'
-    container.stop_all()
+    time.sleep(20) # stop task
+    print '--------Stop Task--------'
+    container.stop('Task')
+    
+    time.sleep(10) # restart task
+    print '------Start Task--------'
+    container.start('Task')
     
     time.sleep(10) # remove task
     print '---------Remove---------'
     container.remove_task('Task')
+    
+    time.sleep(20) # stop all
+    print '---------Stop All---------'
+    container.stop_all()
 
 test_simple_trigger()
