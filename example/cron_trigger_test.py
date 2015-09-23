@@ -1,5 +1,5 @@
 '''
-Cron trigger unit test case  
+Cron trigger test case  
 
 @author: Huiyugeng
 '''

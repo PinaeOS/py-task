@@ -1,5 +1,5 @@
 '''
-simple trigger unit test case  
+simple trigger test case  
 
 @author: Huiyugeng
 '''
@@ -11,7 +11,7 @@ from task import task_container
 
 from task.trigger import simple_trigger
 
-from example.jobs import time_job, time_job_listener
+from example.jobs import time_job
 
 container = task_container.TaskContainer()
 
@@ -21,17 +21,16 @@ def get_now():
     return time_now
 
 def test_simple_trigger():
-    test_job = time_job.TimeJob()
-    test_job_listener = time_job_listener.TimeJobListener()
+    job1 = time_job.JobA()
+    trigger1 = simple_trigger.SimpleTrigger(0, 2)
+    task1 = task.Task('TaskA', job1, trigger1)
+    container.add_task(task1)
     
-    # repeat 50 times in every 3 seconds
-    test_trigger = simple_trigger.SimpleTrigger(50, 3)
-    # start delay 5 senconds
-    test_trigger.set_delay(5, 0)
-    # add task to container
-    _task = task.Task('Task', test_job, test_trigger, test_job_listener)
-    container.add_task(_task)
-    test_job.set_task(_task)
+    job2 = time_job.JobB()
+    trigger2 = simple_trigger.SimpleTrigger(0, 5)
+    trigger2.set_delay(5, 0)
+    task2 = task.Task('TaskB', job2, trigger2)
+    container.add_task(task2)
     
     print 'start at %s' % get_now()
     print '----Start (With Daemon)----'
@@ -45,19 +44,19 @@ def test_simple_trigger():
     print '--------Restart All--------'
     container.start_all()
     
-    time.sleep(20) # stop task
-    print '--------Stop Task--------'
-    container.stop('Task')
+    time.sleep(10) # stop task
+    print '--------Stop Task A--------'
+    container.stop('TaskA')
     
     time.sleep(10) # restart task
-    print '------Start Task--------'
-    container.start('Task')
+    print '------Start Task A--------'
+    container.start('TaskA')
     
     time.sleep(10) # remove task
-    print '---------Remove---------'
-    container.remove_task('Task')
+    print '---------Remove A---------'
+    container.remove_task('TaskA')
     
-    time.sleep(20) # stop all
+    time.sleep(10) # stop all
     print '---------Stop All---------'
     container.stop_all()
 
