@@ -50,6 +50,29 @@ class TaskContainer(object):
                     r.stop_task()
                 del(self.task_runners[name])
             del(self.tasks[name])
+            
+    def get_task(self, name):
+        if name != None:
+            return self.tasks.get(name)
+        return None
+    
+    def get_tasks(self):
+        return self.tasks
+    
+    def stat_tasks(self):
+        
+        status = {-1 : 'exception', 0 : 'stop', 1 : 'running', 2 : 'pause'}
+        
+        status_stat = {'exception' : 0, 'stop' : 0, 'running' : 0, 'pause' : 0}
+        
+        for name in self.tasks:
+            try:
+                flag = self.tasks.get(name).get_status()
+                status_stat[status[flag]] = status_stat[status[flag]] + 1
+            except:
+                pass
+                
+        return status_stat  
     
     def _new_task_runner(self, name):
         r = None

@@ -36,23 +36,29 @@ def test_simple_trigger():
     print '----Start (With Daemon)----'
     container.start_all(True)
     
-    time.sleep(10) # pause container
+    time.sleep(11) # pause container
     print '---------Pause All---------'
     container.pasuse_all()
+    
+    print container.stat_tasks()
     
     time.sleep(10) # restart container
     print '--------Restart All--------'
     container.start_all()
     
-    time.sleep(10) # stop task
+    print container.stat_tasks()
+    
+    time.sleep(11) # stop task
     print '--------Stop Task A--------'
     container.stop('TaskA')
+    
+    print container.stat_tasks()
     
     time.sleep(10) # restart task
     print '------Start Task A--------'
     container.start('TaskA')
     
-    time.sleep(10) # remove task
+    time.sleep(11) # remove task
     print '---------Remove A---------'
     container.remove_task('TaskA')
     
