@@ -49,15 +49,19 @@ class TaskRunner(threading.Thread):
                 try:
                     if self.job_listener != None and isinstance(self.job_listener, job_listener.JobListener):
                         self.job_listener.before_execute()
-                        
-                    self.job.execute()  # execute job
+                      
+                    result = self.job.execute()  # execute job
+                    if result != None and result == False:
+                        if self.job_listener != None and isinstance(self.job_listener, job_listener.JobListener):
+                            self.job_listener.execute_fail()
                     
                     if self.job_listener != None and isinstance(self.job_listener, job_listener.JobListener):
                         self.job_listener.after_execute()
                         
                 except Exception, ex:
+                    if self.job_listener != None and isinstance(self.job_listener, job_listener.JobListener):
+                        self.job_listener.execute_exception(ex)
                     self._task.set_status(-1)
-                    logging.error('Execute task: %s Exception: %s' % (self.name, ex.message))
                     
             if self.trigger._is_finish() is False:
                 time.sleep(self.interval)

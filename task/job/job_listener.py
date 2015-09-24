@@ -24,4 +24,10 @@ class JobListener(object):
     
     def status_changed(self, status):
         pass
+    
+    def execute_exception(self):
+        pass
+    
+    def execute_fail(self, exception):
+        pass
         
