@@ -1,5 +1,3 @@
-import os
-import sys
 
 import task
 
@@ -17,7 +15,6 @@ packages = ['task', 'task.job', 'task.trigger']
 classifiers = [
                'Intended Audience :: Developers',
                'Development Status :: 5 - Production/Stable',
-               'Intended Audience :: Developers',
                'Natural Language :: English',
                'License :: OSI Approved :: Apache Software License',
                'Programming Language :: Python',
