@@ -8,7 +8,7 @@ py-task is a task scheduling tools for Python.
 
 ## Installation ##
 
-The lastest stable is py-task-1.0.tar.gz
+The lastest stable is py-task-1.1.tar.gz
 
     python setup.py install
     

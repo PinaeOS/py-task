@@ -1,4 +1,4 @@
 graft task
 graft task_test
-include *.md *.cfg
+include *.md *.rst *.cfg
 global-exclude *.pyc
