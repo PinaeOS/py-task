@@ -1,0 +1,4 @@
+graft task
+graft task_test
+include *.md *.cfg
+global-exclude *.pyc
